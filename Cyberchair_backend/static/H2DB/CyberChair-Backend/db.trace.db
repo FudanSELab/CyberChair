@@ -1,0 +1,36 @@
+2020-06-09 20:16:13 jdbc[243]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETING[*] MEETING"; expected "MERGE"; SQL statement:
+MEETING MEETING [42001-200]
+2020-06-09 20:16:20 jdbc[243]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETING[*]"; expected "MERGE"; SQL statement:
+MEETING [42001-200]
+2020-06-09 20:16:26 jdbc[243]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETINMEETING_TOPIC[*]"; expected "MERGE"; SQL statement:
+MEETINMEETING_TOPIC [42001-200]
+2020-06-09 20:16:27 jdbc[243]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETINMEETING_TOPIC[*]"; expected "MERGE"; SQL statement:
+MEETINMEETING_TOPIC [42001-200]
+2020-06-09 20:16:28 jdbc[243]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETINMEETING_TOPIC[*]"; expected "MERGE"; SQL statement:
+MEETINMEETING_TOPIC [42001-200]
+2020-06-09 20:16:28 jdbc[243]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETINMEETING_TOPIC[*]"; expected "MERGE"; SQL statement:
+MEETINMEETING_TOPIC [42001-200]
+2020-06-09 20:16:36 jdbc[243]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETING[*] ACRONYM ID"; expected "MERGE"; SQL statement:
+MEETING ACRONYM ID [42001-200]
+2020-06-09 20:16:37 jdbc[243]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETING[*] ACRONYM ID"; expected "MERGE"; SQL statement:
+MEETING ACRONYM ID [42001-200]
+2020-06-09 20:18:06 jdbc[243]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ARTICLE_TOPIC[*]"; expected "ALTER, ANALYZE"; SQL statement:
+ARTICLE_TOPIC [42001-200]
+2020-06-10 10:57:34 jdbc[53]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETING[*]"; expected "MERGE"; SQL statement:
+MEETING [42001-200]
+2020-06-10 10:57:35 jdbc[53]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETING[*]"; expected "MERGE"; SQL statement:
+MEETING [42001-200]
+2020-06-10 10:59:08 jdbc[53]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "MEETING[*]"; expected "MERGE"; SQL statement:
+MEETING [42001-200]
