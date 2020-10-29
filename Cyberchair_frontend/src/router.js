@@ -18,6 +18,10 @@ export const router = new Router({
       path: '/login',
       component: () => import('@/views/Login')
     },
+    // {
+    //   path: '/test',
+    //   component: () => import('@/views/dashboard/cyberchairComponents/post')
+    // },
     {
       path: '/register',
       component: () => import('@/views/Register')
@@ -53,23 +57,73 @@ export const router = new Router({
           path: '/pages/user',
           component: () => import('@/views/dashboard/pages/UserProfile'),
         },
-
+        {
+          name: 'PcMember Invitation',
+          path: '/pages/pcminvite',
+          component: () => import('@/views/dashboard/invitation')
+        },
         {
           name: 'Notifications',
           path: '/pages/notifications',
           component: () => import('@/views/dashboard/notification')
         },
-        
         {
-          name: 'NewSecretInfo',
-          path: '/newsecret',
-          component: () => import('@/views/dashboard/BMBComponents/secretFileInfo')
+          name: 'essay submission',
+          path: '/essaySubmission',
+          component: () => import('@/views/dashboard/essaySubmission'),
+        },
+
+        {
+          name: 'Essay Detail',
+          path: '/essaydetail',
+          component: () => import('@/views/dashboard/EssayDetail'),
+        },
+
+        {
+          name: 'Review Detail',
+          path: '/reviewDetail',
+          component: () => import('@/views/dashboard/reviewDetail'),
+        },
+
+        {
+          name: 'Essay Submission List',
+          path: '/submission/list',
+          component: () => import('@/views/dashboard/SubmissionEssayList'),
+        },
+
+        {
+          name: 'Review Articles',
+          path: '/meeting/reviewArticles',
+          component: () => import('@/views/dashboard/ReviewList'),
+        },
+
+        {
+          name: 'Review Article',
+          path: '/meeting/reviewArticle',
+          component: () => import('@/views/dashboard/ReviewArticle'),
+        },
+
+        {
+          name: 'Conference Detail',
+          path: '/pages/chairMeeting',
+          component: () => import('@/views/dashboard/conferenceDetail')
         },
         {
-          name: 'newDistribution',
-          path: '/newdistribution',
-          component: () => import('@/views/dashboard/BMBComponents/newDistribution')
-        }
+          name: 'post test',
+          path: '/post/test',
+          component: () => import('@/views/dashboard/cyberchairComponents/post')
+        },
+        {
+          name: 'discussion',
+          path: '/article/discussion',
+          component: () => import('@/views/dashboard/PostDisplay')
+          //http://localhost/#/article/discussion?posterName=qwert1&articleId=42&reviewStatus=alreadyReviewed
+        },
+        // {
+        //   name: 'temp test',
+        //   path: '/temp',
+        //   component: () => import('@/views/temp_test')
+        // }
       ],
     },
   ],
@@ -82,7 +136,7 @@ router.beforeEach(function (to, from ,next) {
     if (store.state.token != "undefined" && store.state.token != null) {
       next()
     } else {
-      console.log('case2')
+      // console.log('case2')
       next({
         path: '/login',
         query: {redirect: to.fullPath} // 登录成功之后重新跳转到该路由

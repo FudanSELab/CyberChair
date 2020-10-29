@@ -194,7 +194,22 @@
       },
     },
     mounted: function(){
-        
+        var that = this;
+        this.$axios.get('api/user/undealedNotificationsNum',
+            {params:{username: localStorage.username}}
+        ).then(resp => {
+            if(resp.data.responseCode == 200 && resp.data.responseMessage == "success"){
+                var users = resp.data.responseBody.undealedNotificationsNum;
+                for(var i=0;i<users;i++){
+                  that.notifications.push("You have one unhandled notification");
+                }
+            }else{
+              // alert("errors occurred when getting notification information");
+            }
+        }).catch(error => {
+            // alert("error occurred when loading notification data");
+            console.log(error);
+        });
     },
   }
 </script>

@@ -3,45 +3,64 @@
     <v-app id="container">
     <v-form :model="registerForm" :rules="rules" class="register_container" label-position="left"
              label-width="0px"  ref="registerForm">
-      <p class="register_title">注册</p>
+      <p class="register_title">Sign Up</p>
         <v-text-field type="text" v-model="registerForm.username"
-                  label="用户名"
-                  hint="5-32字符，只能包含英文数字或者字母"
+                  label="username"
+                  hint="5-32 characters consisting of letters/numbers/special characters(-_)"
                   :rules="[rules.usernameValidate]"
                   :validate-on-blur="true"
                   prepend-icon="account_circle"
                   ></v-text-field>
 
         <v-text-field :type="'password'" v-model="registerForm.password"
-                  label="密码"
-                  hint="6-32个字符，必须同时包含英文数字和字母，且不能包含用户名"
+                  label="password"
+                  hint="6-32 characters  consisting of letters/numbers/special characters(-_), at least two categories above and must not contain your username"
                   :rules="[rules.passwordValidate, rules.notContainUsername]"
                   :validate-on-blur="true"
                   prepend-icon="lock"
                   ></v-text-field>
 
         <v-text-field :type="'password'" 
-                  label="确认密码"
+                  label="confirm-password"
                   :rules="[rules.confirmPassword]"
                   :validate-on-blur="true"
                   prepend-icon="lock"
                   ></v-text-field>
 
         <v-text-field type="text" v-model="registerForm.fullname"
-                  label="姓名"
-                  hint="请输入您的真实姓名"
-                  :rules="[rules.required]"
+                  label="fullname"
+                  hint="2-4 words seperated by space"
+                  :rules="[rules.fullnameValidate]"
                   :validate-on-blur="true"
                   prepend-icon="person"
                   ></v-text-field>
 
-      
+        <v-text-field type="text" v-model="registerForm.email"
+                  label="email-address"
+                  :rules="[rules.emailValidate]"
+                  :validate-on-blur="true"
+                  prepend-icon="mail"
+                  ></v-text-field>
+
+        <v-text-field type="text" v-model="registerForm.region"
+                  label="region"
+                  :rules="[rules.required]"
+                  :validate-on-blur="true"
+                  prepend-icon="location_on"
+                  ></v-text-field>
+
+        <v-text-field type="text" v-model="registerForm.institution"
+                  label="institution"
+                  :rules="[rules.required]"
+                  :validate-on-blur="true"
+                  prepend-icon="business"
+                  ></v-text-field>
 
       <div>
-        <v-btn id="submit" style="width: 50%;border: none" v-on:click="register(registerForm)">注册账户</v-btn>
+        <v-btn id="submit" style="width: 50%;border: none" v-on:click="register(registerForm)">CREATE ACCOUNT</v-btn>
       </div>
       <router-link to="login">
-        <div id="login">已有账号？点击此处登录</div>
+        <div id="login">Already have an account? Login now!</div>
       </router-link>
     </v-form>
     </v-app>
@@ -65,9 +84,9 @@ export default {
       },
 
       rules: {
-        required: value => !!value || '这一项必填',
-        confirmPassword: value => value==this.registerForm.password || "确认密码必须和密码相同",
-        notContainUsername: value=> !value.includes(this.registerForm.username)||"密码不能包含用户名",
+        required: value => !!value || 'This field is required.',
+        confirmPassword: value => value==this.registerForm.password || "This field should be identical to password",
+        notContainUsername: value=> !value.includes(this.registerForm.username)||"password must not contain your username",
         usernameValidate: function (username) {
           //username pattern: 6-20 characters consisting of letters or numbers
           var usernamePattern = /^[A-Za-z\-][A-Za-z\d_\-]{4,31}$/;
@@ -77,7 +96,7 @@ export default {
           else if(/^[\d]/.test(username)){
             return "username begins with letters or special characters(-_)"
           }else{
-            return "5-32字符，只能包含英文数字或者字母";
+            return "5-32 characters consisting of letters/numbers/special characters(-_)";
           }
          
           
@@ -92,7 +111,7 @@ export default {
             if(/.*[_\-].*/.test(password)) appearance++;
             if(appearance>=2 && passwordPattern.test(password)) {return true;}
             else {
-              return "6-32个字符，必须同时包含英文数字和字母，且不能包含用户名";
+              return "6-32 characters  consisting of letters/numbers/special characters(-_), at least two categories above and must not contain your username";
             }
 
         },
@@ -102,7 +121,7 @@ export default {
           if(fullnamePattern.test(fullname)){
             return true;
           }else{
-            return "这一项不能为空";
+            return "2-4 words seperated by space";
           }
         },
         emailValidate: function (emailAddress) {
@@ -120,26 +139,29 @@ export default {
   methods: {
     register (formName) {
           if(!this.$refs.registerForm.validate())return false
-          this.$axios.post('http://localhost:8080/register', {
+          this.$axios.post('api/register', {
               username: this.registerForm.username,
               password: this.registerForm.password,
-              name: this.registerForm.fullname,
+              fullname: this.registerForm.fullname,
+              region: this.registerForm.region,
+              email: this.registerForm.email,
+              institution: this.registerForm.institution,
+              authorities: [this.registerForm.usertype]
             })
             .then(resp => {
               if(resp.status === 200 ) {
-
-                // if(resp.data.responseMessage === "success"){
-                  this.$toast('注册成功',{color:'green'})
+                if(resp.data.responseMessage === "success"){
+                  this.$toast('successful registration',{color:'green'})
                   window.setTimeout(function(){
                     this.$router.replace('login')
                   }.bind(this), 2000)
-                // }
+                }
               } else{
-                this.$toast('注册失败，请重新刷新尝试',{color:'red'})
+                this.$toast('register error due to network problem',{color:'red'})
               }
             })
             .catch(error => {
-                this.$toast('注册失败，请重新刷新尝试',{color:'red'})
+                this.$toast('register error due to network problem',{color:'red'})
             })
         }
   }

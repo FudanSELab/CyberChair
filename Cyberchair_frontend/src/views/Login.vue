@@ -7,12 +7,12 @@
              label-position="left"
              label-width="0px"
              ref="loginForm">
-      <p class="login_title">登录</p>
+      <p class="login_title">Login</p>
         <v-text-field type="text"
                   prop="username"
                   v-model="loginForm.username"
                   auto-complete="off"
-                  label="用户名"
+                  label="username"
                   :rules="[rules.username]"
                   :validate-on-blur="true"
                   prepend-icon="account_circle"
@@ -21,15 +21,15 @@
                   prop="password"
                   v-model="loginForm.password"
                   auto-complete="off"
-                  label="密码"
+                  label="password"
                   :rules="[rules.password]"
                   :validate-on-blur="true"
                   prepend-icon="lock"
                   ></v-text-field>
         <v-btn  id="login" style="width: 50%;border: none"
-                   v-on:click="login">立即登录</v-btn>
+                   v-on:click="login">login</v-btn>
         <router-link to="register">
-          <div id="register">还没有账号？点击这里注册</div>
+          <div id="register">Do not have an account? Register now!</div>
         </router-link>
     </v-form>
     </v-app>
@@ -47,11 +47,11 @@ export default {
       },
       rules: {
         username: function(username){
-          if(!username || username=='')return "请输入您的用户名";
+          if(!username || username=='')return "please enter username";
           return true;
         },
         password: function(password){
-          if(!password || password=='')return "请输入您的密码";
+          if(!password || password=='')return "please enter password";
           return true;
         },
       },
@@ -60,29 +60,28 @@ export default {
   methods: {
     login () {
       if(!this.$refs.loginForm.validate())return false
-      this.$axios.post('http://localhost:8080/login', {
+      this.$axios.post('api/login', {
         username: this.loginForm.username,
         password: this.loginForm.password
       })
         .then(resp => {
           if (resp.status === 200) {
-            
-            this.$toast('登录成功',{color:'green'})
-            console.log(resp.data)
-            this.$store.commit('login', resp.data)
-            window.setTimeout(function(){
-              if(this.loginForm.username == 'admin')
-                this.$router.replace('newsecret')
-              else
+            if(resp.data.responseMessage === "success"){
+              this.$toast('successful login!',{color:'green'})
+              this.$store.commit('login', resp.data)
+             window.setTimeout(function(){
+               if(this.loginForm.username == 'admin')
+                 this.$router.replace('dashboardAdmin')
+               else
                 this.$router.replace('dashboard')
               }.bind(this), 2000)
-            
+            }
           } else{
-            this.$toast('登录失败，请刷新后重新尝试',{color:'red'})
+            this.$toast('login error due to'  + resp.data.responseBody.reason,{color:'red'})
           }
         })
         .catch(error => {
-          this.$toast('登录失败，请刷新后重新尝试',{color:'red'})
+          this.$toast('login error due to ' + error.responseBody.reason,{color:'red'})
         })
     }
   }

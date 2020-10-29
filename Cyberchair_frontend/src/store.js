@@ -21,12 +21,12 @@ export default new Vuex.Store({
     },
     login(state, data){
       // console.log(data.responseBody.token)
-      localStorage.setItem('token', data.token)
-      // localStorage.setItem('username', data.responseBody.username)
+      localStorage.setItem('token', data.responseBody.token)
+      localStorage.setItem('username', data.responseBody.username)
       // localStorage.setItem('userDetails', data.userDetails)
       // state.user = data.userDetails
-      state.token = data.token
-      // state.username = data.responseBody.username
+      state.token = data.responseBody.token
+      state.username = data.responseBody.username
     },
     logout(state) {
       // 移除token
